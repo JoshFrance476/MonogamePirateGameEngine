@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <IsPackable>false</IsPackable>
+    <!-- A tiny self-contained test runner (see TestRunner.cs): no NuGet packages needed.
+         Run with:  dotnet run -c Release (from tests/PirateEngine.Tests); append a name filter after a double dash. -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\PirateEngine.Core\PirateEngine.Core.csproj" />
+  </ItemGroup>
+
+</Project>

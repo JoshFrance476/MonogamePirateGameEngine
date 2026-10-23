@@ -1,0 +1,135 @@
+// Global gameplay tuning and the AI spawn table.
+{
+  "startGold": 300,
+  "startShip": "sloop",
+  "startCargo": { "wood": 16, "planks": 10, "stone": 4, "cannonballs": 24 },
+
+  "dockReach": 4,
+  "hullPerPlank": 5,
+  "repairResource": "planks",
+  "ammoResource": "cannonballs",
+  "playerUsesAmmo": true,
+  "broadsideArcDegrees": 65,
+  "cannonballSpeed": 14,
+
+  "maxAiShips": 18,
+  "spawnMinDistance": 35,
+  "spawnMaxDistance": 70,
+  "despawnDistance": 120,
+  "safeHarbourRadius": 45,
+  "hunterAggroRadius": 14,
+  "hunterLeashRadius": 35,
+
+  // ---- land units ----
+  "startTroops": ["cutlass_crew", "musketeers"],
+  "cannonVsTroopsMultiplier": 2,
+  "embarkDistance": 1.8,
+  "maxAiUnits": 8,
+  "unitSpawnMinDistance": 25,
+  "unitSpawnMaxDistance": 60,
+  "garrisonBuildingClearance": 14,
+  "garrisonAggroRadius": 7,
+  "garrisonLeashRadius": 14,
+  // Navy garrisons ashore. Same danger bands as ships; never inside the safe harbour.
+  "unitSpawns": [
+    { "unit": "cutlass_crew", "weight": 2, "minDanger": 0.0, "maxDanger": 1.0, "lootGold": 35 },
+    { "unit": "musketeers",   "weight": 2, "minDanger": 0.0, "maxDanger": 1.0, "lootGold": 45 }
+  ],
+
+  // ---- states and settlements ----
+  // Which states and towns exist at the start is configured in setup.json. These values govern
+  // how the world behaves afterwards: tuned for a world near equilibrium that changes slowly on
+  // its own and reacts mainly to the player.
+  "politics": {
+    "maxSettlementsPerState": 16,
+    "minSettlementDistance": 30,
+    "economyInterval": 10,
+    "diplomacyInterval": 20,
+    "siegeInterval": 3,
+    "foodPerPop": 0.1,
+    "growthRate": 0.002,
+    "playerGrowthMultiplier": 2,
+    "constructionChance": 0.004,
+    "colonyChance": 0.00025,
+    "proactiveWarChance": 0.001,
+    "reactiveWarChance": 0.2,
+    "warCooldown": 1800,
+    "campaignCooldown": [240, 480],
+    "independentConquestChance": 0.0001,
+    "opinionRecovery": 0.02,
+    "popBase": 30,
+    "popPerBuilding": 9,
+    "taxPerPop": 0.15,
+    "garrisonPerPop": 0.22,
+    "soldierCost": 4,
+    "foundCost": 500,
+    "startPopulation": 12,
+    "startTreasury": 400,
+    "physicalRadius": 80,
+    "captureSeconds": 12,
+    "captureRadius": 2.5,
+    "truceSeconds": 1800,
+    "newStateGrace": 600,
+    "giftGold": 100,
+    "levels": [
+      { "name": "Hamlet",  "minPopulation": 0,   "radius": 3,  "maxBuildings": 6,  "storage": 120, "fortification": 1.0 },
+      { "name": "Village", "minPopulation": 60,  "radius": 4,  "maxBuildings": 12,  "storage": 200, "fortification": 1.25 },
+      { "name": "Town",    "minPopulation": 160,  "radius": 5, "maxBuildings": 20, "storage": 320, "fortification": 1.5 },
+      { "name": "City",    "minPopulation": 340, "radius": 6, "maxBuildings": 30, "storage": 500, "fortification": 2.0 }
+    ],
+    // Behaviour weights (0..1): aggression, expansion, trade, defence, peacefulness, opportunism.
+    "behaviours": [
+      { "id": "warlike", "name": "Warlike",
+        "description": "Spends heavily on armies and picks fights with weaker neighbours. Rarely sues for peace.",
+        "aggression": 0.9, "expansion": 0.5, "trade": 0.2, "defence": 0.4, "peacefulness": 0.1, "opportunism": 0.5,
+        "titles": ["Empire of {0}", "Warlords of {0}", "Dominion of {0}"] },
+      { "id": "expansionist", "name": "Expansionist",
+        "description": "Founds new colonies and seizes independent towns. Fights when its borders get crowded.",
+        "aggression": 0.5, "expansion": 1.0, "trade": 0.4, "defence": 0.4, "peacefulness": 0.4, "opportunism": 0.4,
+        "titles": ["Kingdom of {0}", "Crown of {0}", "Realm of {0}"] },
+      { "id": "mercantile", "name": "Mercantile",
+        "description": "Rich from trade and markets. Prefers peace and alliances, and pays well for goods.",
+        "aggression": 0.15, "expansion": 0.4, "trade": 1.0, "defence": 0.5, "peacefulness": 0.9, "opportunism": 0.1,
+        "titles": ["Republic of {0}", "Merchant League of {0}", "Free Cities of {0}"] },
+      { "id": "isolationist", "name": "Isolationist",
+        "description": "Keeps to itself behind strong garrisons. Never starts wars, but defends fiercely.",
+        "aggression": 0.0, "expansion": 0.15, "trade": 0.3, "defence": 1.0, "peacefulness": 0.8, "opportunism": 0.0,
+        "titles": ["Principality of {0}", "Sanctuary of {0}", "Duchy of {0}"] },
+      { "id": "opportunist", "name": "Opportunist",
+        "description": "Strikes states that are weak or already at war, and makes peace once it has its prize.",
+        "aggression": 0.55, "expansion": 0.5, "trade": 0.5, "defence": 0.4, "peacefulness": 0.6, "opportunism": 1.0,
+        "titles": ["Sultanate of {0}", "Confederacy of {0}", "Syndicate of {0}"] }
+    ],
+    "settlementNames": [
+      "Port Aldren", "Saltmarsh", "Greyhaven", "Coralbay", "Fort Ember", "Mistwatch", "Brindle", "Tarrow",
+      "Kestrel Point", "Oakharbour", "Sunreach", "Duskmoor", "Winterhold", "Amberley", "Rookwick",
+      "Seabright", "Hollowfen", "Cinder Cove", "Marrowgate", "Lantern Key", "Westmere", "Thornbury",
+      "Galewick", "Pelican Rest", "Ironmouth", "Copperhead", "Velmara", "Corsa", "San Albero",
+      "Puerto Linde", "Isla Verde", "Montaro", "Verrin", "Hallowmere", "Blackwater", "Stormhaven",
+      "Driftwood", "Sable Rock", "Ravenna", "Goldcrest", "Calder Bay", "Ravensgate", "Bellhaven",
+      "Sorrow Point", "Tidewell", "Ashford", "Gullreach", "Cape Merrow", "Isla Rosa", "Bonewick",
+      "Saint Corin", "Halyard", "Quillon", "Mariner's Rest", "Shellbourne", "Redfern", "Wrecker's Cove",
+      "Lowtide", "Kingsfall", "Mangrove", "Barnacle Bay", "Highcliff", "Cobble Quay", "Fairwind",
+      "Smuggler's Run", "Vesper", "Gannet Isle", "Port Royal", "Breakwater", "Stillwater", "Emberfall",
+      "Dunmore", "Cutlass Key", "Jade Harbour", "Salt Lick", "Old Anchor"
+    ],
+    "stateColors": ["#D64541", "#3A7BD5", "#2EAD5B", "#9B59B6", "#E67E22", "#1ABC9C", "#E84393", "#7F8C8D"]
+  },
+
+  "wreckLifetime": 150,
+  "deathGoldPenalty": 0.25,
+
+  // danger = 0 at the start harbour, rising to 1 toward the far seas.
+  "spawns": [
+    { "ship": "merchant_cog",     "role": "merchant", "weight": 4, "minDanger": 0.0, "maxDanger": 1.0,
+      "lootGold": 60,  "cargo": { "grain": 8, "cloth": 4, "rum": 2 } },
+    { "ship": "merchant_galleon", "role": "merchant", "weight": 1, "minDanger": 0.35, "maxDanger": 1.0,
+      "lootGold": 250, "cargo": { "spices": 6, "rum": 6, "iron": 4, "sails": 2 } },
+    { "ship": "navy_cutter",      "role": "hunter",   "weight": 4, "minDanger": 0.0, "maxDanger": 0.6,
+      "lootGold": 40,  "cargo": { "cannonballs": 12, "planks": 4 } },
+    { "ship": "navy_brig",        "role": "hunter",   "weight": 3, "minDanger": 0.3, "maxDanger": 1.0,
+      "lootGold": 120, "cargo": { "cannonballs": 24, "planks": 8, "iron": 2 } },
+    { "ship": "man_o_war",        "role": "hunter",   "weight": 1, "minDanger": 0.7, "maxDanger": 1.0,
+      "lootGold": 400, "cargo": { "cannonballs": 40, "planks": 15, "iron": 6, "sails": 2 } }
+  ]
+}

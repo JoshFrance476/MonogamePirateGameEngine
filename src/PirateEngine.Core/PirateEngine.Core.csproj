@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <RootNamespace>PirateEngine.Core</RootNamespace>
+    <!-- The core library deliberately has no MonoGame dependency so the whole
+         simulation can be unit-tested, run headless, or hosted by a server. -->
+  </PropertyGroup>
+
+  <ItemGroup>
+    <!-- Default content ships inside the assembly; a Data/ folder next to the game overrides it. -->
+    <EmbeddedResource Include="Data\*.json" />
+    <InternalsVisibleTo Include="PirateEngine.Tests" />
+  </ItemGroup>
+
+</Project>

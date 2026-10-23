@@ -1,0 +1,22 @@
+// Every tradeable good. Order is display order. "tier" is informational (0 raw, 1 processed, 2 advanced).
+// "value": base trade price in gold (settlements adjust it by scarcity). "food": nutrition for settlement populations.
+[
+  { "id": "wood",        "name": "Wood",        "color": "#8B5A2B", "tier": 0, "value": 3 },
+  { "id": "stone",       "name": "Stone",       "color": "#9A9A9A", "tier": 0, "value": 3 },
+  { "id": "grain",       "name": "Grain",       "color": "#E3C565", "tier": 0, "value": 3, "food": 1 },
+  { "id": "fish",        "name": "Fish",        "color": "#7FB3D5", "tier": 0, "value": 3, "food": 1 },
+  { "id": "sugarcane",   "name": "Sugarcane",   "color": "#A9D18E", "tier": 0, "value": 4 },
+  { "id": "cotton",      "name": "Cotton",      "color": "#F4F1E8", "tier": 0, "value": 4 },
+  { "id": "iron_ore",    "name": "Iron Ore",    "color": "#A0522D", "tier": 0, "value": 5 },
+  { "id": "furs",        "name": "Furs",        "color": "#B08B5A", "tier": 0, "value": 12 },
+  { "id": "spices",      "name": "Spices",      "color": "#D2691E", "tier": 0, "value": 18 },
+
+  { "id": "planks",      "name": "Planks",      "color": "#C19A6B", "tier": 1, "value": 6 },
+  { "id": "rations",     "name": "Rations",     "color": "#D9B382", "tier": 1, "value": 7, "food": 2 },
+  { "id": "rum",         "name": "Rum",         "color": "#8E3B1F", "tier": 1, "value": 25 },
+  { "id": "cloth",       "name": "Cloth",       "color": "#E6D7FF", "tier": 1, "value": 15 },
+  { "id": "iron",        "name": "Iron",        "color": "#6E7B8B", "tier": 1, "value": 14 },
+
+  { "id": "cannonballs", "name": "Cannonballs", "color": "#3B3B3B", "tier": 2, "value": 4 },
+  { "id": "sails",       "name": "Sails",       "color": "#FFFFFF", "tier": 2, "value": 30 }
+]

@@ -1,0 +1,109 @@
+// World setup: the states and towns that already exist when a playthrough starts.
+//
+// A new game uses the "default" preset (or the one named on the command line: --setup ID).
+// Counts are written for a 1024x1024 map ("referenceArea") and scale with the map's area.
+//
+// Density: a few heartlands — rich, crowded centres of civilisation where the great realms sit —
+// fade into a sparsely settled frontier and then empty wilderness. Towns are spaced from
+// spacing.dense (heartland cores) to spacing.sparse (frontier). Every town is a port.
+//
+// States are listed as groups by size class ({ "size": "major", "count": 2 }) or as single,
+// hand-designed realms with any of: name, capital, behaviour, color, at ([x, y] as fractions of
+// the map). A hand-placed heartland realm brings its own heartland with it.
+//
+// Every town starts established at its level (Hamlet, Village, Town, City): population near
+// what its buildings support ("fill"), enough food, stores, a garrison. From then on the world
+// changes slowly by itself (see "politics" in config.json) and mostly in answer to the player.
+{
+  "default": "standard",
+
+  // Size classes. towns = [min, max] including the capital; radius = realm radius in tiles;
+  // townLevels: denser land favours the later entries; heartland = sits in a heartland.
+  "sizes": {
+    "major":     { "towns": [7, 10], "radius": 95, "capitalLevel": "City", "townLevels": ["Hamlet", "Village", "Town", "City"], "heartland": true,  "treasury": 2000 },
+    "regional":  { "towns": [4, 6],  "radius": 70, "capitalLevel": "City", "townLevels": ["Hamlet", "Village", "Town"],         "heartland": true,  "treasury": 1200 },
+    "minor":     { "towns": [1, 3],  "radius": 45, "capitalLevel": "Town", "townLevels": ["Hamlet", "Village"],                 "heartland": false, "treasury": 600 },
+    "citystate": { "towns": [1, 2],  "radius": 30, "capitalLevel": "City", "townLevels": ["Village"],                           "heartland": true,  "treasury": 1500 }
+  },
+
+  "presets": [
+    {
+      "id": "standard",
+      "name": "Standard",
+      "description": "Four heartlands with two great realms and three regional powers, minor states and free towns in the frontier, and a friendly harbour by your start.",
+      "density": { "heartlands": 4, "heartlandRadius": [70, 110], "heartlandSpacing": 1.8, "heartlandClearance": 120,
+                   "noiseWeight": 0.3, "noiseScale": 220, "wilderness": 0.12 },
+      "spacing": { "dense": 15, "sparse": 34 },
+      "states": [
+        { "size": "major", "count": 2 },
+        { "size": "regional", "count": 3 },
+        { "size": "minor", "count": 3 }
+      ],
+      "independents": { "count": 16, "levels": ["Hamlet", "Village"], "freeCities": 2, "freeCityLevel": "Town" },
+      "startPort": { "enabled": true, "distance": [14, 30], "level": "Village" },
+      "capitalClearance": 70,
+      "townClearance": 40,
+      "relations": { "alliances": 2, "rivalries": 3, "wars": 0, "spread": 15 },
+      "fill": [0.82, 0.95]
+    },
+    {
+      "id": "frontier",
+      "name": "Frontier",
+      "description": "A thinly settled world: two heartlands, a few realms, scattered villages and wide empty coasts.",
+      "density": { "heartlands": 2, "heartlandRadius": [60, 90], "heartlandSpacing": 2.2, "heartlandClearance": 150,
+                   "noiseWeight": 0.35, "noiseScale": 260, "wilderness": 0.1 },
+      "spacing": { "dense": 18, "sparse": 45 },
+      "states": [
+        { "size": "major", "count": 1 },
+        { "size": "regional", "count": 1 },
+        { "size": "minor", "count": 3 }
+      ],
+      "independents": { "count": 10, "levels": ["Hamlet", "Hamlet", "Village"], "freeCities": 1, "freeCityLevel": "Village" },
+      "startPort": { "enabled": true, "distance": [16, 34], "level": "Hamlet" },
+      "relations": { "alliances": 1, "rivalries": 2, "wars": 0 },
+      "fill": [0.75, 0.9]
+    },
+    {
+      "id": "crowded",
+      "name": "Old World",
+      "description": "Crowded and ancient: six heartlands packed with great cities, city-states between them, and an old war still smouldering.",
+      "density": { "heartlands": 6, "heartlandRadius": [80, 120], "heartlandSpacing": 1.5, "heartlandClearance": 100,
+                   "noiseWeight": 0.4, "noiseScale": 200, "wilderness": 0.06 },
+      "spacing": { "dense": 14, "sparse": 26 },
+      "states": [
+        { "size": "major", "count": 3 },
+        { "size": "regional", "count": 3 },
+        { "size": "citystate", "count": 2 },
+        { "size": "minor", "count": 4 }
+      ],
+      "independents": { "count": 24, "levels": ["Hamlet", "Village", "Village", "Town"], "freeCities": 4, "freeCityLevel": "City" },
+      "startPort": { "enabled": true, "distance": [14, 28], "level": "Town" },
+      "relations": { "alliances": 3, "rivalries": 5, "wars": 1 },
+      "fill": [0.85, 0.97]
+    },
+    {
+      // An example of a hand-designed world: named realms placed at fixed spots, plus generated ones.
+      "id": "charted",
+      "name": "Charted Seas",
+      "description": "Three named powers in fixed places - a hand-designed example to copy - with minor states and free towns generated around them.",
+      "density": { "heartlands": 3, "heartlandRadius": [80, 110], "heartlandClearance": 110 },
+      "states": [
+        { "name": "Crown of Valemont", "capital": "Valemont", "behaviour": "expansionist", "size": "major", "color": "#9B59B6", "at": [0.32, 0.38] },
+        { "name": "Most Serene Republic of Corvo", "capital": "Corvo", "behaviour": "mercantile", "size": "regional", "color": "#E67E22", "at": [0.68, 0.34] },
+        { "name": "Sultanate of Qasrin", "capital": "Qasrin", "behaviour": "opportunist", "size": "regional", "color": "#2EAD5B", "at": [0.6, 0.72] },
+        { "size": "minor", "count": 3 }
+      ],
+      "independents": { "count": 12, "freeCities": 1 },
+      "startPort": { "enabled": true },
+      "relations": { "alliances": 1, "rivalries": 2, "wars": 0 }
+    },
+    {
+      "id": "empty",
+      "name": "Empty Seas",
+      "description": "No states or towns at all: build your own from nothing.",
+      "states": [],
+      "independents": { "count": 0, "freeCities": 0 },
+      "startPort": { "enabled": false }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+Land logistics - wagon units are needed to transport resources over land.
+Formations - design formation blueprints that you can order troops/ships to position themselves in.
+Resources - Add resource tiles such as stone, metals, animals, crops.
+
+Playing as a pirate, the player should be motivated to establish their own 'pirate outpost'. Perhaps you need to dock to perform repairs and upgrades
+to your ship and because you have attacked the established settlements you have hostile relations with them, meaning you need your own dock to make repairs, 
+hence establishing an outpost and maybe some production chains. Or maybe some merchants would be willing to agree contracts to deliver resources to your 
+outpost that you can use to restock your ship. 
+
+Beach needs to not surround land.
+Better graphics
+Slower movement
+Replace cirle borders with square ones, or just remove.
+Progress needs to be much slower, even owning a town should be an end game milestone.
+Story?

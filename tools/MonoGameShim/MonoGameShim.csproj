@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!--
+    Headless, software-rendered stand-in for the subset of the MonoGame API this project uses.
+    Signatures match MonoGame 3.8, so PirateEngine.Game compiles unchanged against either.
+    Purpose: build and screenshot the game on machines with no GPU, display or NuGet access
+    (CI, containers). It is not a general MonoGame replacement. See README.md for usage.
+  -->
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <RootNamespace>Microsoft.Xna.Framework</RootNamespace>
+    <NoWarn>CS1591;CS0067</NoWarn>
+  </PropertyGroup>
+
+</Project>

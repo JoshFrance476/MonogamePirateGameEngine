@@ -1,0 +1,132 @@
+// Buildings occupy one land tile. Placement: the ship must be docked, the tile within
+// config.dockReach of the dock on the same island, on an allowed biome (empty = any buildable).
+// Recipes are tried round-robin; inputs are delivered by ship, outputs collected by ship.
+// "goldOutput" pays straight into the treasury. "services" unlock dock-panel actions.
+//
+// Production chains:
+//   wood ─► Sawmill ─► planks ─► (repairs, ship upgrades)
+//   iron_ore + wood ─► Smelter ─► iron ─► Foundry ─► cannonballs (ammo)
+//   cotton ─► Weaver ─► cloth ─► Sailmaker ─► sails ─► (ship upgrades)
+//   sugarcane ─► Distillery ─► rum ─► Market ─► gold
+//   grain + fish ─► Galley Kitchen ─► rations ─► Market ─► gold
+[
+  // ---------------- raw producers ----------------
+  { "id": "lumber_camp", "name": "Lumber Camp", "glyph": "L", "color": "#4E7D3A",
+    "description": "Fells timber. Must be built in forest, jungle, taiga or swamp.",
+    "allowedBiomes": ["TemperateForest", "Jungle", "Taiga", "Swamp"],
+    "goldCost": 40, "buildCost": {}, "storage": 30,
+    "recipes": [ { "outputs": { "wood": 2 }, "cycleSeconds": 6 } ] },
+
+  { "id": "quarry", "name": "Quarry", "glyph": "Q", "color": "#8A8580",
+    "description": "Cuts stone from hills and mountains.",
+    "allowedBiomes": ["Hills", "Mountain"],
+    "goldCost": 50, "buildCost": { "wood": 5 }, "storage": 30,
+    "recipes": [ { "outputs": { "stone": 2 }, "cycleSeconds": 8 } ] },
+
+  { "id": "farm", "name": "Farm", "glyph": "F", "color": "#D4B84A",
+    "description": "Grows grain on open grassland or savanna.",
+    "allowedBiomes": ["Grassland", "Savanna"],
+    "goldCost": 40, "buildCost": { "wood": 4 }, "storage": 30,
+    "recipes": [ { "outputs": { "grain": 3 }, "cycleSeconds": 10 } ] },
+
+  { "id": "fishery", "name": "Fishery", "glyph": "~", "color": "#5B9BD5",
+    "description": "Nets fish from the shallows. Must be on the coast.",
+    "allowedBiomes": ["Beach", "Grassland", "Savanna", "TemperateForest", "Jungle", "Tundra", "Taiga", "Desert", "Swamp"],
+    "requiresCoast": true,
+    "goldCost": 35, "buildCost": { "wood": 4 }, "storage": 30,
+    "recipes": [ { "outputs": { "fish": 3 }, "cycleSeconds": 8 } ] },
+
+  { "id": "plantation", "name": "Sugar Plantation", "glyph": "P", "color": "#7CB342",
+    "description": "Grows sugarcane in hot, wet lands.",
+    "allowedBiomes": ["Jungle", "Savanna", "Swamp"],
+    "goldCost": 60, "buildCost": { "wood": 6 }, "storage": 30,
+    "recipes": [ { "outputs": { "sugarcane": 2 }, "cycleSeconds": 8 } ] },
+
+  { "id": "cotton_field", "name": "Cotton Field", "glyph": "C", "color": "#EDE7D9",
+    "description": "Grows cotton in warm, dry-ish lands.",
+    "allowedBiomes": ["Savanna", "Grassland", "Desert"],
+    "goldCost": 50, "buildCost": { "wood": 4 }, "storage": 30,
+    "recipes": [ { "outputs": { "cotton": 2 }, "cycleSeconds": 9 } ] },
+
+  { "id": "mine", "name": "Iron Mine", "glyph": "M", "color": "#7A4A33",
+    "description": "Digs iron ore from the mountains.",
+    "allowedBiomes": ["Mountain", "Hills"],
+    "goldCost": 80, "buildCost": { "wood": 8, "stone": 4 }, "storage": 30,
+    "recipes": [ { "outputs": { "iron_ore": 1 }, "cycleSeconds": 7 } ] },
+
+  { "id": "trapper", "name": "Trapper's Lodge", "glyph": "T", "color": "#9C7A54",
+    "description": "Traps for furs in the cold north.",
+    "allowedBiomes": ["Taiga", "Tundra"],
+    "goldCost": 45, "buildCost": { "wood": 4 }, "storage": 20,
+    "recipes": [ { "outputs": { "furs": 1 }, "cycleSeconds": 8 } ] },
+
+  { "id": "spice_garden", "name": "Spice Garden", "glyph": "S", "color": "#E07B39",
+    "description": "Cultivates rare spices deep in the jungle.",
+    "allowedBiomes": ["Jungle"],
+    "goldCost": 90, "buildCost": { "wood": 6, "stone": 2 }, "storage": 20,
+    "recipes": [ { "outputs": { "spices": 1 }, "cycleSeconds": 10 } ] },
+
+  // ---------------- processors ----------------
+  { "id": "sawmill", "name": "Sawmill", "glyph": "W", "color": "#B5835A",
+    "description": "Saws wood into planks (used for repairs and refits).",
+    "goldCost": 60, "buildCost": { "wood": 10 }, "storage": 40,
+    "recipes": [ { "inputs": { "wood": 2 }, "outputs": { "planks": 2 }, "cycleSeconds": 6 } ] },
+
+  { "id": "galley", "name": "Galley Kitchen", "glyph": "K", "color": "#C9A26B",
+    "description": "Turns grain and fish into ship's rations.",
+    "goldCost": 60, "buildCost": { "wood": 6, "stone": 4 }, "storage": 40,
+    "recipes": [ { "inputs": { "grain": 2, "fish": 1 }, "outputs": { "rations": 3 }, "cycleSeconds": 8 } ] },
+
+  { "id": "distillery", "name": "Rum Distillery", "glyph": "R", "color": "#8E3B1F",
+    "description": "Distils sugarcane into rum.",
+    "goldCost": 90, "buildCost": { "planks": 6, "stone": 4 }, "storage": 40,
+    "recipes": [ { "inputs": { "sugarcane": 3 }, "outputs": { "rum": 1 }, "cycleSeconds": 10 } ] },
+
+  { "id": "weaver", "name": "Weaver", "glyph": "V", "color": "#B9A7E6",
+    "description": "Weaves cotton into cloth.",
+    "goldCost": 70, "buildCost": { "planks": 6 }, "storage": 40,
+    "recipes": [ { "inputs": { "cotton": 2 }, "outputs": { "cloth": 1 }, "cycleSeconds": 8 } ] },
+
+  { "id": "smelter", "name": "Smelter", "glyph": "I", "color": "#5D6D7E",
+    "description": "Smelts iron ore with wood as fuel.",
+    "goldCost": 100, "buildCost": { "stone": 10, "planks": 4 }, "storage": 40,
+    "recipes": [ { "inputs": { "iron_ore": 2, "wood": 1 }, "outputs": { "iron": 1 }, "cycleSeconds": 10 } ] },
+
+  // ---------------- advanced ----------------
+  { "id": "foundry", "name": "Foundry", "glyph": "B", "color": "#3B3B3B",
+    "description": "Casts cannonballs from iron. Your ammunition supply.",
+    "goldCost": 120, "buildCost": { "stone": 12, "planks": 6 }, "storage": 60,
+    "recipes": [ { "inputs": { "iron": 1 }, "outputs": { "cannonballs": 6 }, "cycleSeconds": 8 } ] },
+
+  { "id": "sailmaker", "name": "Sailmaker", "glyph": "A", "color": "#F5F5F5",
+    "description": "Sews cloth into sails for ship refits.",
+    "goldCost": 100, "buildCost": { "planks": 8 }, "storage": 30,
+    "recipes": [ { "inputs": { "cloth": 2 }, "outputs": { "sails": 1 }, "cycleSeconds": 12 } ] },
+
+  { "id": "market", "name": "Market", "glyph": "$", "color": "#F1C40F",
+    "description": "Sells luxury goods for gold, paid straight to your treasury.",
+    "goldCost": 80, "buildCost": { "wood": 8, "planks": 4 }, "storage": 60,
+    "recipes": [
+      { "inputs": { "rum": 1 },     "goldOutput": 45, "cycleSeconds": 3 },
+      { "inputs": { "spices": 1 },  "goldOutput": 40, "cycleSeconds": 3 },
+      { "inputs": { "cloth": 1 },   "goldOutput": 25, "cycleSeconds": 3 },
+      { "inputs": { "furs": 1 },    "goldOutput": 22, "cycleSeconds": 3 },
+      { "inputs": { "rations": 2 }, "goldOutput": 12, "cycleSeconds": 3 }
+    ] },
+
+  { "id": "town_hall", "name": "Town Hall", "glyph": "H", "color": "#C9A227",
+    "description": "Founds a settlement (and your own state, if you have none). Buildings in its territory share the town stores, the town grows when fed, pays taxes and raises a militia. Must be well away from other settlements.",
+    "goldCost": 250, "buildCost": { "planks": 10, "stone": 8 }, "storage": 10,
+    "services": ["town_hall"] },
+
+  { "id": "barracks", "name": "Barracks", "glyph": "X", "color": "#9E3B32",
+    "description": "Recruits squads of troops onto your docked ship while it is in reach.",
+    "goldCost": 100, "buildCost": { "wood": 10, "stone": 6 }, "storage": 10,
+    "services": ["barracks"] },
+
+  { "id": "shipyard", "name": "Shipyard", "glyph": "Y", "color": "#6D4C41",
+    "description": "Lets you refit your ship into a bigger class while docked in reach. Coastal.",
+    "requiresCoast": true,
+    "goldCost": 150, "buildCost": { "planks": 15, "stone": 10 }, "storage": 10,
+    "services": ["shipyard"] }
+]

@@ -1,0 +1,37 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RollForward>Major</RollForward>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <LangVersion>latest</LangVersion>
+    <AssemblyName>PirateEngine</AssemblyName>
+    <RootNamespace>PirateEngine.Game</RootNamespace>
+    <TieredPGO>true</TieredPGO>
+    <!-- All art (tiles, ships, buildings, font) is generated procedurally at startup, so the
+         project needs no MonoGame Content Pipeline (no .mgcb, no mgcb tool). -->
+  </PropertyGroup>
+
+  <!-- Normal builds use real MonoGame (cross-platform OpenGL via SDL2). -->
+  <ItemGroup Condition="'$(UseMonoGameShim)' != 'true'">
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.*" />
+  </ItemGroup>
+
+  <!-- Headless verification builds (CI / no GPU): compile against the API-compatible software
+       renderer in tools/MonoGameShim.   dotnet build -p:UseMonoGameShim=true -->
+  <ItemGroup Condition="'$(UseMonoGameShim)' == 'true'">
+    <ProjectReference Include="..\..\tools\MonoGameShim\MonoGameShim.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\PirateEngine.Core\PirateEngine.Core.csproj" />
+  </ItemGroup>
+
+  <!-- Content definitions are copied next to the executable so they can be modded. -->
+  <ItemGroup>
+    <Content Include="..\PirateEngine.Core\Data\*.json" Link="Data\%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+
+</Project>

@@ -1,0 +1,48 @@
+// Ship classes. Every ship is one tile in size; classes differ in stats and sprite colours.
+// speed: tiles/sec. turnRate: rad/sec. range/sightRadius: tiles. reload: seconds per volley.
+// guns: balls per volley (the player spends one cannonball per gun).
+// troopCapacity: soldiers carried (a full Cutlass Crew is 12, Musketeers 10). AI ships carry none.
+[
+  { "id": "sloop", "name": "Sloop",
+    "speed": 5.5, "turnRate": 3.4, "hull": 100, "guns": 2, "damage": 8, "range": 6.5, "reload": 2.2,
+    "accuracy": 0.72, "cargo": 80, "troopCapacity": 24, "sightRadius": 13,
+    "hullColor": "#7A4B2A", "sailColor": "#F2EBD9",
+    "upgradesTo": "brigantine", "upgradeGold": 400, "upgradeCost": { "planks": 25, "sails": 4, "iron": 6 } },
+
+  { "id": "brigantine", "name": "Brigantine",
+    "speed": 5.0, "turnRate": 2.8, "hull": 180, "guns": 4, "damage": 8, "range": 7.0, "reload": 2.4,
+    "accuracy": 0.76, "cargo": 120, "troopCapacity": 48, "sightRadius": 15,
+    "hullColor": "#5C3A21", "sailColor": "#EFE6CF",
+    "upgradesTo": "frigate", "upgradeGold": 1200, "upgradeCost": { "planks": 50, "sails": 10, "iron": 20 } },
+
+  { "id": "frigate", "name": "Frigate",
+    "speed": 4.6, "turnRate": 2.2, "hull": 320, "guns": 6, "damage": 9, "range": 8.0, "reload": 2.7,
+    "accuracy": 0.8, "cargo": 200, "troopCapacity": 80, "sightRadius": 17,
+    "hullColor": "#3E2A1A", "sailColor": "#FAF7F0" },
+
+  // ---- AI-only classes ----
+  { "id": "navy_cutter", "name": "Navy Cutter",
+    "speed": 5.2, "turnRate": 3.2, "hull": 70, "guns": 2, "damage": 6, "range": 6.0, "reload": 2.6,
+    "accuracy": 0.6, "cargo": 30, "sightRadius": 12,
+    "hullColor": "#2E4A7D", "sailColor": "#E8EEF7" },
+
+  { "id": "navy_brig", "name": "Navy Brig",
+    "speed": 4.8, "turnRate": 2.6, "hull": 170, "guns": 4, "damage": 7, "range": 7.0, "reload": 2.6,
+    "accuracy": 0.68, "cargo": 50, "sightRadius": 14,
+    "hullColor": "#1F3A6B", "sailColor": "#E8EEF7" },
+
+  { "id": "man_o_war", "name": "Man-o'-War",
+    "speed": 4.0, "turnRate": 1.8, "hull": 420, "guns": 8, "damage": 9, "range": 8.5, "reload": 3.2,
+    "accuracy": 0.72, "cargo": 80, "sightRadius": 16,
+    "hullColor": "#14274A", "sailColor": "#F4F6FA" },
+
+  { "id": "merchant_cog", "name": "Merchant Cog",
+    "speed": 3.8, "turnRate": 2.2, "hull": 110, "guns": 1, "damage": 5, "range": 5.0, "reload": 3.5,
+    "accuracy": 0.5, "cargo": 80, "sightRadius": 10,
+    "hullColor": "#8C6A3F", "sailColor": "#D9C9A3" },
+
+  { "id": "merchant_galleon", "name": "Treasure Galleon",
+    "speed": 3.4, "turnRate": 1.8, "hull": 260, "guns": 3, "damage": 7, "range": 6.5, "reload": 3.0,
+    "accuracy": 0.55, "cargo": 140, "sightRadius": 12,
+    "hullColor": "#9C7A2E", "sailColor": "#E8D8A8" }
+]

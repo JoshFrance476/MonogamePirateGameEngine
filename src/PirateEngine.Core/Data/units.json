@@ -1,0 +1,21 @@
+// Land unit types. A squad on the map is `members` soldiers sharing one hit-point pool
+// (members × hpPerMember); as it takes damage its head-count drops and so does its damage.
+// Squads ride aboard ships (each soldier uses one troop-deck place) and are landed when docked.
+// The Navy fields the same unit types as garrisons, drawn in Navy colours.
+//
+// kind: melee | ranged.  damage: per soldier per attack vs troops.
+// damageVsShips: per musket ball that strikes a hull (ranged only).
+// range/sightRadius/autoEngageRadius: tiles.  reload: seconds.  speed: tiles/s on open ground.
+[
+  { "id": "cutlass_crew", "name": "Cutlass Crew", "kind": "melee",
+    "description": "Boarding crew with cutlasses and pistols. Deadly up close; must close to fight.",
+    "members": 12, "hpPerMember": 10, "damage": 2, "range": 1.25, "reload": 1.2,
+    "speed": 2.4, "sightRadius": 7, "autoEngageRadius": 3.5,
+    "recruitGold": 60, "recruitCost": { "rations": 4 } },
+
+  { "id": "musketeers", "name": "Musketeers", "kind": "ranged",
+    "description": "Marksmen with muskets. Volley fire at troops, or at ships within range of the shore.",
+    "members": 10, "hpPerMember": 8, "damage": 4, "damageVsShips": 2, "range": 5.5, "reload": 3.5,
+    "accuracy": 0.55, "speed": 2.1, "sightRadius": 8, "autoEngageRadius": 5.5,
+    "recruitGold": 90, "recruitCost": { "rations": 4, "iron": 2 } }
+]
