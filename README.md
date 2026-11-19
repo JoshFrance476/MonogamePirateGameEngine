@@ -1,3 +1,6 @@
+Disclaimer: This project (including this readme) is entirely vibecoded.
+
+
 # Pirate Engine
 
 A MonoGame engine for a single-player, top-down pirate game on a large procedurally generated
