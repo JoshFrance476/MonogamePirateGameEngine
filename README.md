@@ -1,4 +1,4 @@
-Disclaimer: This project (including this readme) is entirely vibecoded.
+Disclaimer: This project (including this readme) is entirely vibecoded. It is a prototype for a game idea I had.
 
 
 # Pirate Engine
